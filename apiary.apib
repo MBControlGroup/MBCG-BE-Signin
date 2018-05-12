@@ -18,7 +18,7 @@ HOST: http://polls.apiblueprint.org/
     + Headers
 
             Location: /admins
-            Set-Cookie: "abcd"
+            Set-Cookie: token="abcd"
     
             
 
@@ -34,14 +34,20 @@ HOST: http://polls.apiblueprint.org/
 
 ## SignOut [/signout]
 
-### sign out the account [GET]
+### sign out the account [POST]
+
++ Request (application/json)
+
+        {
+            "username": "zhang3"
+        }
 
 + Response 200 (application/json)
 
     + Headers
 
             Location: /
-            Set-Cookie: null
+            Set-Cookie: token=null
     
     + Body
 
