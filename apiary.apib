@@ -28,3 +28,24 @@ HOST: http://polls.apiblueprint.org/
                 "cnmsg": "成功",
                 "data": null
             }
+
+
+## SignOut [/signout]
+
+### sign out the account [GET]
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /
+            Cookie: {"token" : null}
+
+    + Body
+
+            {
+                "code": 200,
+                "enmsg": "ok",
+                "cnmsg": "成功",
+                "data": null
+            }
