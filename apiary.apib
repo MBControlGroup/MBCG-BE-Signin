@@ -14,11 +14,13 @@ HOST: http://polls.apiblueprint.org/
             "password":"zhang3"
         }
 + Response 200 (application/json)
-
+            
     + Headers
 
             Location: /admins
-            Cookie: {"token" : "abcd"}
+            Set-Cookie: "abcd"
+    
+            
 
     + Body
 
@@ -39,8 +41,8 @@ HOST: http://polls.apiblueprint.org/
     + Headers
 
             Location: /
-            Cookie: {"token" : null}
-
+            Set-Cookie: null
+    
     + Body
 
             {
