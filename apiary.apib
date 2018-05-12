@@ -1,0 +1,30 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# SignIn
+
+## SignIn [/signin]
+
+### sign in the account [POST]
+
++ Request (application/json)
+
+        {
+            "username":"zhang3"
+            "password":"zhang3"
+        }
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /admins
+            Cookie: {"token" : "abcd"}
+
+    + Body
+
+            {
+                "code": 200,
+                "enmsg": "ok",
+                "cnmsg": "成功",
+                "data": null
+            }
