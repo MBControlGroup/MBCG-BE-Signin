@@ -6,8 +6,8 @@ import (
     "net/http"
     "strconv"
     "fmt"
-    "github.com/MBControlGroup/login/entities"
-    "github.com/MBControlGroup/login/token"
+    "github.com/MBControlGroup/MBCG-BE-Login/entities"
+    "github.com/MBControlGroup/MBCG-BE-Login/token"
     "github.com/unrolled/render"
     //"github.com/dgrijalva/jwt-go/request"
     //"github.com/dgrijalva/jwt-go"
@@ -25,16 +25,38 @@ func signinHandler(formatter *render.Render) http.HandlerFunc {
         u := entities.LoginService.AdminFindByAccount(user.Username)
         //u := entities.NewUserInfo(entities.UserInfo{UserName: req.Form["username"][0]})
         
-        if u.Admin_passwd != user.Password {
-            formatter.JSON(w, http.StatusBadRequest, struct{ Success bool}{false})
+        if u==nil || u.Admin_passwd != user.Password {
+            formatter.JSON(w, http.StatusBadRequest, struct{ Code int;Enmsg string;Cnmsg string; Data interface{}}{400, "fail", "失败", nil})
         } else {
             //fmt.Println(u.Admin_id)
             tokenString, err := token.Generate(u.Admin_id)
             cookie := http.Cookie{Name:"token", Value:tokenString, Path:"/", MaxAge:86400}
             http.SetCookie(w, &cookie)
             checkErr(err)
-            formatter.JSON(w, http.StatusOK, struct{ Success bool}{true})
+            formatter.JSON(w, http.StatusOK, struct{ Code int;Enmsg string;Cnmsg string; Data interface{}}{200, "ok", "成功", nil})
         }
+    }
+} 
+
+func signoutHandler(formatter *render.Render) http.HandlerFunc {
+    return func(w http.ResponseWriter, req *http.Request) {
+        cookie, err := req.Cookie("token")
+
+        if err != nil || cookie.Value == "" {
+            formatter.JSON(w, http.StatusBadRequest, struct{ Code int;Enmsg string;Cnmsg string; Data interface{}}{302, "fail", "失败", nil})
+	        return;
+        }
+
+	    _, err = token.Valid(cookie.Value)
+
+	    if err != nil {
+	        formatter.JSON(w, http.StatusBadRequest, struct{ Code int;Enmsg string;Cnmsg string; Data interface{}}{302, "fail", "失败", nil})
+	        return;
+        }
+
+        cookie = &http.Cookie{Name: "token", Path: "/", MaxAge: -1}
+        http.SetCookie(w, cookie)
+        formatter.JSON(w, http.StatusOK, struct{ Code int;Enmsg string;Cnmsg string; Data interface{}}{200, "ok", "成功", nil})
     }
 } 
 
@@ -47,16 +69,23 @@ func addAdminHandler(formatter *render.Render) http.HandlerFunc {
         fmt.Println(123)
         admin.Admin_passwd = req.Form["admin_password"][0]
         admin.Admin_account = req.Form["admin_account"][0]
-        admin_type, err := strconv.Atoi(req.Form["admin_type"][0])
-        checkErr(err)
-        admin.Admin_type = admin_type
+        //admin_type, err := strconv.Atoi(req.Form["admin_type"][0])
+        //checkErr(err)
+        admin.Admin_type = req.Form["admin_type"][0]
         admin_Im_user_id, err := strconv.Atoi(req.Form["admin_im_user_id"][0])
+        checkErr(err)
         admin.Im_user_id = admin_Im_user_id
         fmt.Println(admin)
         entities.LoginService.AdminSave(&admin)
     }
 }
- 
+
+func addIMUserHandler(formatter *render.Render) http.HandlerFunc {
+    return func(w http.ResponseWriter, req *http.Request) {
+        entities.LoginService.AddIMUser()
+    }
+}
+
 func testToken(formatter *render.Render) http.HandlerFunc {
     return func(w http.ResponseWriter, req *http.Request) {
 
@@ -95,7 +124,7 @@ func tokenValid(formatter *render.Render) http.HandlerFunc {
             formatter.JSON(w, http.StatusBadRequest, 
                 struct{ Success bool;
                         Detail  string;
-                        id      int}{
+                        Id      int}{
                         false, "Notfound token", -1,
                         })
             return
@@ -109,7 +138,7 @@ func tokenValid(formatter *render.Render) http.HandlerFunc {
             formatter.JSON(w, 403, 
                 struct{ Success bool;
                         Detail  string;
-                        id      int}{
+                        Id      int}{
                         false, "Invalid token", -1,
                         })
             return

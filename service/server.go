@@ -26,7 +26,9 @@ func initRoutes(mx *mux.Router, formatter *render.Render) {
     mx.HandleFunc("/testToken", testToken(formatter)).Methods("GET")
     mx.HandleFunc("/tokenValid", tokenValid(formatter)).Methods("POST")
     mx.HandleFunc("/signin", signinHandler(formatter)).Methods("POST")
+    mx.HandleFunc("/signout", signoutHandler(formatter)).Methods("POST")
     mx.HandleFunc("/pmanage/admin", addAdminHandler(formatter)).Methods("POST")
+    mx.HandleFunc("/pmanage/IMUsers", addIMUserHandler(formatter)).Methods("POST")
 
 }
 

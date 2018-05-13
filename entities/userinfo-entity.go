@@ -18,7 +18,7 @@ type Admins struct {
     Admin_id        int   `xorm:"pk autoincr 'id'"` //语义标签
     Admin_account   string    `xorm:"unique"`
     Admin_passwd    string
-    Admin_type      int
+    Admin_type      string
     Im_user_id      int
 }
 
