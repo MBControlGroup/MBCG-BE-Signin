@@ -14,11 +14,13 @@ HOST: http://polls.apiblueprint.org/
             "password":"zhang3"
         }
 + Response 200 (application/json)
-
+            
     + Headers
 
             Location: /admins
-            Cookie: {"token" : "abcd"}
+            Set-Cookie: token="abcd"
+    
+            
 
     + Body
 
@@ -27,4 +29,54 @@ HOST: http://polls.apiblueprint.org/
                 "enmsg": "ok",
                 "cnmsg": "成功",
                 "data": null
+            }
+
+
+## SignOut [/signout]
+
+### sign out the account [POST]
+
++ Request (application/json)
+
+        {
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /
+            Set-Cookie: token=null
+    
+    + Body
+
+            {
+                "code": 200,
+                "enmsg": "ok",
+                "cnmsg": "成功",
+                "data": null
+            }
+            
+## Get Token IsValid [/tokenValid]
+
+### tokenValid [POST]
+
++ Request (application/json)
+
+        {
+            "token":"abcd"
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /
+    
+    + Body
+
+            {
+                "Success": true,
+                "Detail": "The token is valid.",
+                "Id": 1,
             }
