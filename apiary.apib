@@ -56,3 +56,27 @@ HOST: http://polls.apiblueprint.org/
                 "cnmsg": "成功",
                 "data": null
             }
+            
+## Get Token IsValid [/tokenValid]
+
+### tokenValid [POST]
+
++ Request (application/json)
+
+        {
+            "token":"abcd"
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /
+    
+    + Body
+
+            {
+                "Success": true,
+                "Detail": "The token is valid.",
+                "Id": 1,
+            }
