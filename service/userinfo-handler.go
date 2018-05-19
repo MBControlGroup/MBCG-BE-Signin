@@ -147,7 +147,7 @@ func tokenValid(formatter *render.Render) http.HandlerFunc {
         id, _ := strconv.Atoi(user_id)
         formatter.JSON(w, http.StatusOK, 
             struct{ Success bool;
-                    Content string;
+                    Detail string;
                     Id      int}{
                     true, 
                     "The token is valid.",
