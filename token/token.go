@@ -5,6 +5,7 @@ import (
 	//"github.com/dgrijalva/jwt-go/request"
 	"fmt"
 	"time"
+	"errors"
 )
 
 const (
@@ -24,17 +25,20 @@ func Generate(admin_id int) (string, error) {
 }
 
 func Valid(tokenString string) (string, error) {
-	token1, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+	token1, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
 		return []byte(SecretKey), nil
 	})
-	//fmt.Println(token1.Valid)
+	if token1 == nil {
+		return "", errors.New("InValid token!")
+	}
 	if claims, ok := token1.Claims.(jwt.MapClaims); ok && token1.Valid {
+		fmt.Println(3)
 		return fmt.Sprintf("%v", claims["id"]), nil
 	} else {
-		return "", err
+		return "", errors.New("InValid token!")
 	}
 
 }
