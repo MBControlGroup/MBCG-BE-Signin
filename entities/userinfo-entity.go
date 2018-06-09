@@ -8,6 +8,7 @@ const (
     OF = iota
     OR
 )
+
 // UserInfo .
 type UserInfo struct {
     Username    string  `json:"username"`
