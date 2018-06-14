@@ -16,15 +16,15 @@ type UserInfo struct {
 }
 
 type Admins struct {
-    Admin_id        int   `xorm:"pk autoincr 'id'"` //语义标签
-    Admin_account   string    `xorm:"unique"`
+    Admin_id        int    
+    Admin_account   string    
     Admin_passwd    string
     Admin_type      string
     Im_user_id      int
 }
 
 type Soldiers struct {
-    Soldier_id      int   `xorm:"pk autoincr 'id'"` //语义标签
+    Soldier_id      int   
     Rank            string
     Id_num          string
     Name            string
@@ -35,7 +35,7 @@ type Soldiers struct {
 }
 
 type Task struct {
-    Task_id         int   `xorm:"pk autoincr 'id'"`
+    Task_id         int   
     Title           string
     Mem_count       int
     Launch_admin_id int 
@@ -47,7 +47,7 @@ type Task struct {
 }
 
 type BroadcastMessages struct {
-    Bm_id           int   `xorm:"pk autoincr 'id'"`
+    Bm_id           int   
     Title           string
     Detail          string
     Bm_type         string
@@ -57,39 +57,39 @@ type BroadcastMessages struct {
 }
 
 type BcMsgOffices struct {
-    Bmo_id          int   `xorm:"pk autoincr 'id'"`
+    Bmo_id          int   
     Msg_id          int
     Msg_office_id   int
 }
 
 type BcMsgOrgs struct {
-    Bmo_id          int   `xorm:"pk autoincr 'id'"`
+    Bmo_id          int   
     Msg_id          int
     Msg_org_id      int
 }
 
 type Organizations struct {
-    Org_id          int   `xorm:"pk autoincr 'id'"`
+    Org_id          int   
     Serve_office_id int
     Leader_sid      int
     Name            string
 }
 
 type Offices struct {
-    Office_id           int   `xorm:"pk autoincr 'id'"`
+    Office_id           int   
     Office_level        int
     Higher_office_id    int
     Name                string
 }
 
 type CommonNotifications struct {
-    Cn_id           int   `xorm:"pk autoincr 'id'"`
+    Cn_id           int   
     Cn_bm_id        int
     Recv_soldier_id int
 }
 
 type CmNtReceipts struct {
-    Cnr_id          int   `xorm:"pk autoincr 'id'"`
+    Cnr_id          int   
     Cn_id           int
     Rec_content     string
 }

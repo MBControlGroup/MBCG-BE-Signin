@@ -28,7 +28,7 @@ func signinHandler(formatter *render.Render) http.HandlerFunc {
         if u==nil || u.Admin_passwd != user.Password {
             formatter.JSON(w, http.StatusBadRequest, struct{ Code int `json:"code"`;Enmsg string `json:"enmsg"`;Cnmsg string `json:"cnmsg"`; Data interface{} `json:"data"`}{400, "fail", "失败", nil})
         } else {
-            //fmt.Println(u.Admin_id)
+            fmt.Println(u.Admin_id)
             tokenString, err := token.Generate(u.Admin_id)
             cookie := http.Cookie{Name:"token", Value:tokenString, Path:"/", MaxAge:86400}
             http.SetCookie(w, &cookie)

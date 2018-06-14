@@ -35,7 +35,7 @@ func Valid(tokenString string) (string, error) {
 		return "", errors.New("InValid token!")
 	}
 	if claims, ok := token1.Claims.(jwt.MapClaims); ok && token1.Valid {
-		fmt.Println(3)
+		fmt.Println(claims["id"])
 		return fmt.Sprintf("%v", claims["id"]), nil
 	} else {
 		return "", errors.New("InValid token!")
