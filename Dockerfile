@@ -7,6 +7,6 @@ RUN cd "$GOPATH/src/github.com/MBControlGroup/MBCG-BE-Login/service" && go get -
 RUN cd "$GOPATH/src/github.com/MBControlGroup/MBCG-BE-Login/entities" && go get -v && go install -v
 RUN cd "$GOPATH/src/github.com/MBControlGroup/MBCG-BE-Login/token" && go get -v && go install -v
 
-EXPOSE 8080
+EXPOSE 9200
 
 VOLUME /data
