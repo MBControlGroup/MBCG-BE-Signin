@@ -16,6 +16,8 @@ import (
 
 func signinHandler(formatter *render.Render) http.HandlerFunc {
     return func(w http.ResponseWriter, req *http.Request) {
+        w.Header().Set("Access-Control-Allow-Origin", "*") 
+
         var user entities.UserInfo
         
         err := json.NewDecoder(req.Body).Decode(&user)
@@ -40,6 +42,8 @@ func signinHandler(formatter *render.Render) http.HandlerFunc {
 
 func signoutHandler(formatter *render.Render) http.HandlerFunc {
     return func(w http.ResponseWriter, req *http.Request) {
+        w.Header().Set("Access-Control-Allow-Origin", "*") 
+        
         cookie, err := req.Cookie("token")
 
         if err != nil || cookie.Value == "" {
