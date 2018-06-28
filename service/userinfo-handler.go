@@ -93,6 +93,8 @@ func addIMUserHandler(formatter *render.Render) http.HandlerFunc {
 func preOptionHandler(formatter *render.Render) http.HandlerFunc {
     return func(w http.ResponseWriter, req *http.Request) {
         w.Header().Set("Access-Control-Allow-Origin", "*") 
+	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
         formatter.JSON(w, http.StatusOK, "")
     }
 }
