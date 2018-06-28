@@ -19,7 +19,6 @@ func signinHandler(formatter *render.Render) http.HandlerFunc {
         w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
-	w.Header().Set("Set-Cookie", "name=token") 
 
         var user entities.UserInfo
         
@@ -37,6 +36,7 @@ func signinHandler(formatter *render.Render) http.HandlerFunc {
             tokenString, err := token.Generate(u.Admin_id)
             cookie := http.Cookie{Name:"token", Value:tokenString, Path:"/", MaxAge:86400}
             http.SetCookie(w, &cookie)
+	    w.Header().Set("Set-Cookie", "token="+tokenString) 
             checkErr(err)
             formatter.JSON(w, http.StatusOK, struct{ Code int `json:"code"`;Enmsg string `json:"enmsg"`;Cnmsg string `json:"cnmsg"`; Data interface{} `json:"data"`}{200, "ok", "成功", nil})
         }
