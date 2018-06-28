@@ -1,9 +1,10 @@
 package service
 
 import (
+	//"time"
 	"encoding/json"
 	//"fmt"
-    "time"
+    //"time"
     "net/http"
     "strconv"
     "fmt"
@@ -17,9 +18,13 @@ import (
 
 func signinHandler(formatter *render.Render) http.HandlerFunc {
     return func(w http.ResponseWriter, req *http.Request) {
+        //headMap := make(map[string][]string)
+        //headMap["Access-Control-Allow-Origin"] = append(headMap["Access-Control-Allow-Origin"],"*")
+        //headMap["Access-Control-Allow-Headers"] = append(headMap["Access-Control-Allow-Headers"],"Origin, X-Requested-With, Content-Type, Accept")
+        //headMap["Access-Control-Allow-Methods"] = append(headMap["Access-Control-Allow-Methods"],"GET, POST, PUT, DELETE")
         w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
+	    w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
 
         var user entities.UserInfo
         
@@ -35,9 +40,15 @@ func signinHandler(formatter *render.Render) http.HandlerFunc {
         } else {
             fmt.Println(u.Admin_id)
             tokenString, err := token.Generate(u.Admin_id)
-            cookie := http.Cookie{Name:"token", Value:tokenString, Path:"/", MaxAge:86400}
+            //cookie := http.Cookie{Name:"token", Value:tokenString, MaxAge:86400}
+            //sid=kcyt333ns5i5xiejizlz0fjpxfd6d59f; expires=Fri, 28-Jun-2019 15:06:09 GMT; Max-Age=31536000; path=/; secure; HttpOnly
+            cookie := http.Cookie{Name:"token", Value:tokenString, MaxAge:86400, }
             http.SetCookie(w, &cookie)
-	    w.Header().Set("Set-Cookie", "token="+tokenString+";expires="+time.Now().Format("2006-01-02 15:04:05")+";Max-Age=31536000;path=/;secure;HttpOnly") 
+            //headMap["set-cookie"] = append(headMap["set-cookie"],cookie.String())
+            //w.Header = headMap
+            //w.Header().Add("Set-Cookie", cookie.String())
+            //w.Header().Set("set-cookie", cookie.String())
+	        //w.Header().Set("set-cookie", "token="+tokenString+";expires="+time.Now().Format("2006-01-02 15:04:05")+";Max-Age=31536000;path=/;secure;HttpOnly") 
             checkErr(err)
             formatter.JSON(w, http.StatusOK, struct{ Code int `json:"code"`;Enmsg string `json:"enmsg"`;Cnmsg string `json:"cnmsg"`; Data interface{} `json:"data"`}{200, "ok", "成功", nil})
         }
@@ -47,8 +58,8 @@ func signinHandler(formatter *render.Render) http.HandlerFunc {
 func signoutHandler(formatter *render.Render) http.HandlerFunc {
     return func(w http.ResponseWriter, req *http.Request) {
         w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
+	    w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
         
         cookie, err := req.Cookie("token")
 
@@ -99,8 +110,8 @@ func addIMUserHandler(formatter *render.Render) http.HandlerFunc {
 func preOptionHandler(formatter *render.Render) http.HandlerFunc {
     return func(w http.ResponseWriter, req *http.Request) {
         w.Header().Set("Access-Control-Allow-Origin", "*") 
-	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
+	    w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
         formatter.JSON(w, http.StatusOK, "")
     }
 }
