@@ -23,7 +23,7 @@ func signinHandler(formatter *render.Render) http.HandlerFunc {
         //headMap["Access-Control-Allow-Headers"] = append(headMap["Access-Control-Allow-Headers"],"Origin, X-Requested-With, Content-Type, Accept")
         //headMap["Access-Control-Allow-Methods"] = append(headMap["Access-Control-Allow-Methods"],"GET, POST, PUT, DELETE")
         w.Header().Set("Access-Control-Allow-Origin", "*")
-	    w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	    w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Credentials")
 	    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
 
         var user entities.UserInfo
@@ -58,7 +58,7 @@ func signinHandler(formatter *render.Render) http.HandlerFunc {
 func signoutHandler(formatter *render.Render) http.HandlerFunc {
     return func(w http.ResponseWriter, req *http.Request) {
         w.Header().Set("Access-Control-Allow-Origin", "*")
-	    w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	    w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Credentials")
 	    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
         
         cookie, err := req.Cookie("token")
@@ -110,7 +110,7 @@ func addIMUserHandler(formatter *render.Render) http.HandlerFunc {
 func preOptionHandler(formatter *render.Render) http.HandlerFunc {
     return func(w http.ResponseWriter, req *http.Request) {
         w.Header().Set("Access-Control-Allow-Origin", "*") 
-	    w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	    w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Credentials")
 	    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
         formatter.JSON(w, http.StatusOK, "")
     }
