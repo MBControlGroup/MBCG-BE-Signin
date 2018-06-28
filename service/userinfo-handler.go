@@ -36,7 +36,7 @@ func signinHandler(formatter *render.Render) http.HandlerFunc {
             tokenString, err := token.Generate(u.Admin_id)
             cookie := http.Cookie{Name:"token", Value:tokenString, Path:"/", MaxAge:86400}
             http.SetCookie(w, &cookie)
-	    w.Header().Set("Set-Cookie", "token="+tokenString) 
+	    w.Header().Set("Set-Cookie", "token="+tokenString+";expires="+time.Now().Format("2006-01-02 15:04:05")+";Max-Age=31536000;path=/;secure;HttpOnly") 
             checkErr(err)
             formatter.JSON(w, http.StatusOK, struct{ Code int `json:"code"`;Enmsg string `json:"enmsg"`;Cnmsg string `json:"cnmsg"`; Data interface{} `json:"data"`}{200, "ok", "成功", nil})
         }
