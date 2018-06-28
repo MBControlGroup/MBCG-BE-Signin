@@ -24,7 +24,8 @@ func signinHandler(formatter *render.Render) http.HandlerFunc {
         //headMap["Access-Control-Allow-Methods"] = append(headMap["Access-Control-Allow-Methods"],"GET, POST, PUT, DELETE")
         w.Header().Set("Access-Control-Allow-Origin", "*")
 	    w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Credentials")
-	    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
+        w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
+        w.Header().Set("Access-Control-Allow-Credentials", "True") 
 
         var user entities.UserInfo
         
@@ -59,7 +60,8 @@ func signoutHandler(formatter *render.Render) http.HandlerFunc {
     return func(w http.ResponseWriter, req *http.Request) {
         w.Header().Set("Access-Control-Allow-Origin", "*")
 	    w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Credentials")
-	    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
+        w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
+        w.Header().Set("Access-Control-Allow-Credentials", "True") 
         
         cookie, err := req.Cookie("token")
 
@@ -111,7 +113,8 @@ func preOptionHandler(formatter *render.Render) http.HandlerFunc {
     return func(w http.ResponseWriter, req *http.Request) {
         w.Header().Set("Access-Control-Allow-Origin", "*") 
 	    w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Credentials")
-	    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
+        w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
+        w.Header().Set("Access-Control-Allow-Credentials", "True") 
         formatter.JSON(w, http.StatusOK, "")
     }
 }
