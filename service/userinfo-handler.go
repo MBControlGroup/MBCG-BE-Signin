@@ -19,6 +19,7 @@ func signinHandler(formatter *render.Render) http.HandlerFunc {
         w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE") 
+	w.Header().Set("Set-Cookie", "name=token") 
 
         var user entities.UserInfo
         
