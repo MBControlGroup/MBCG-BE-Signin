@@ -3,6 +3,7 @@ package entities
 import (
     //"database/sql"
     "github.com/go-xorm/xorm"
+    "time"
     _ "github.com/go-sql-driver/mysql"
 )
 
@@ -20,6 +21,7 @@ func init() {
     en, err := xorm.NewEngine("mysql", "mbcsdev:mbcsdev2018@(222.200.180.59:9000)/MBDB?charset=utf8")
     //tx, err := mydb.Begin()
     checkErr(err)
+    en.SetConnMaxLifetime(3595 * time.Second)
     engine = en
 }
 
